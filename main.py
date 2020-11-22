@@ -21,10 +21,6 @@ elif len(sys.argv)==4:
     teletoken=sys.argv[3]
     tele_enable=True
 
-if tele_enable:
-    bot=telepot.Bot(teletoken)
-
-
 getheader={
     'Host': 'n.cg.163.com',
     'Connection': 'keep-alive',
@@ -66,9 +62,6 @@ def getme(url,header):
     result=r.get(url=url,headers=header)
     return result
 
-def send(id,message):
-    if tele_enable:
-        bot.sendMessage(id, message, parse_mode=None, disable_web_page_preview=None, disable_notification=None, reply_to_message_id=None, reply_markup=None)
 
 if __name__ == "__main__":
     me=getme(current,getheader)
@@ -80,9 +73,7 @@ if __name__ == "__main__":
     sign=signin(sign,signheader)
     if(sign.status_code==200):
         message='[网易云游戏自动签到]签到成功！'
-        send(teleid,message)
         print(message)
     else:
         message='[网易云游戏自动签到]签到失败，回显状态码为{}\n具体错误信息如下：\n{}'.format(sign.status_code,sign.text)
-        send(teleid,message)
         print(message)
